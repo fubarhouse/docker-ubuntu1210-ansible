@@ -7,6 +7,7 @@ RUN sed -i.bak -r 's/(archive|security).ubuntu.com/old-releases.ubuntu.com/g' /e
 # Install dependencies.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+       python-setuptools python-dev build-essential \
        python-software-properties \
        software-properties-common \
        rsyslog sudo \
@@ -15,6 +16,9 @@ RUN apt-get update \
     && apt-get clean
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 #ADD etc/rsyslog.d/50-default.conf /etc/rsyslog.d/50-default.conf
+
+# Install pip
+RUN easy_install pip
 
 # Install Ansible
 RUN pip install ansible
