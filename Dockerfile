@@ -17,15 +17,16 @@ RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 #ADD etc/rsyslog.d/50-default.conf /etc/rsyslog.d/50-default.conf
 
 # Install Ansible
-RUN \
-  # add-apt-repository -y ppa:ansible/ansible \
-  # && \
-  apt-get update \
-  && apt-get install -y --no-install-recommends \
-     ansible \
-  && rm -rf /var/lib/apt/lists/* \
-  && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
-  && apt-get clean
+RUN apt-get update \
+    && apt-get install python-pip python-dev git -y \
+    && pip install PyYAML jinja2 paramiko \
+    && git clone https://github.com/ansible/ansible.git \
+    && cd ansible \
+    && make install \
+    && mkdir /etc/ansible \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
+    && apt-get clean
 
 COPY initctl_faker .
 RUN chmod +x initctl_faker && rm -fr /sbin/initctl && ln -s /initctl_faker /sbin/initctl
