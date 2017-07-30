@@ -8,7 +8,7 @@ RUN sed -i.bak -r 's/(archive|security).ubuntu.com/old-releases.ubuntu.com/g' /e
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        python-pip make git \
-       python python-yaml python-paramiko python-jinja2 python-httplib2 \
+       python-dev python-yaml python-paramiko python-jinja2 python-httplib2 \
        python-software-properties software-properties-common \
        rsyslog sudo build-essential gcc rsync openssh-server libssl-dev zip \
     && rm -Rf /var/lib/apt/lists/* \
