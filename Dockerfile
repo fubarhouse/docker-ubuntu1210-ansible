@@ -15,6 +15,13 @@ RUN apt-get update \
     && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
     && apt-get clean
 RUN pip install setuptools
+
+# Upgrade python
+RUN wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz \
+    && ./configure \
+    && make \
+    && make install
+
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 #ADD etc/rsyslog.d/50-default.conf /etc/rsyslog.d/50-default.conf
 
