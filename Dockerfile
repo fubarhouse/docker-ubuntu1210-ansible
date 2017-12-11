@@ -25,6 +25,10 @@ RUN wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz \
     && make install \
     && rm -f ../Python-2.7.13.tgz
 
+# Install nodejs
+RUN curl -sL http://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install nodejs
+
 RUN sed -i 's/^\($ModLoad imklog\)/#\1/' /etc/rsyslog.conf
 #ADD etc/rsyslog.d/50-default.conf /etc/rsyslog.d/50-default.conf
 
